@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <title>JAVASCRIPT</title>
+</head>
+
+<body>
+    <script>
+        // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+        //1) Задача состоит в следующем! Написать код который отправляет POST запрос со следующим body! 
+        var obj = {
+            data: {
+                question: 'How are you',
+                answer: 'I am good'
+            }
+        }
+
+        var xhr = new XMLHttpRequest();
+
+
+        xhr.open("POST", 'http://localhost:3000/');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(obj));
+        xhr.onload = function () {
+        if(xhr.status === 200) {
+            console.log(JSON.parse(xhr.responseText));
+        }
+    };
+
+        
+        // И расширить серверную часть ниже добавить заголовки чтобы можно было отправить c любого домена и распарсить body и вернуть его!!
+
+        let http = require('http');
+        http.createServer((req, res) => {
+            
+            res.setHeader('Access-Control-Allow-Origin', "*");
+            res.setHeader('Access-Control-Allow-Headers', "*");
+            let body = '';
+            req.on('data', chunk => {
+                body = String(chunk);
+                console.log(JSON.parse(body));
+            }).on('end', () => {
+                res.end(body);
+            });
+            res.end();
+        }).listen(3000, '127.0.0.1', () => console.log('Server is listening on port:' + 3000));
+        // 2) Отправить запрос исgользуя fetch или xmlhttprequest которой содержит query в url  
+        // http://localhost:3000/phones?priceS=7000&priceF=40000&color=black - вот пример, где ?priceS=7000&priceF=40000&color=black -  query
+        // где 7000 - 40000 - диапазон цен, то есть в query фильтр, диапазон 7000 - 40000  и цвет черный
+        // Делаем сервер, НА сервере есть массив с обьектов, использем модуль
+        const url = require('url') 
+        // чтобы распарсить priceS, priceF, color и отдаем отфильтрованный массив phones по этим 3-м критериям, соответственно если поменять диапазон цен или цвет то и
+        // массив уже будет другой, не хардкодим)))
+        const phones = [
+            {
+                name: 'iphone7',
+                price: 14000,
+                color: 'black'
+            },
+            {
+                name: 'iphone8',ы
+                price: 18000,
+                color: 'white'
+            },
+            {
+                name: 'iphone10',
+                price: 24000,
+                color: 'pink'
+            },
+            {
+                name: 'iphone11',
+                price: 28000,
+                color: 'black'
+            },
+            {
+                name: 'sumsung',
+                price: 14000,
+                color: 'black'
+            },
+            {
+                name: 'xiomi',
+                price: 10000,
+                color: 'black'
+            },
+            {
+                name: 'meizu',
+                price: 8000,
+                color: 'green'
+            },
+            {
+                name: 'huaiwei',
+                price: 11000,
+                color: 'black'
+            },
+        ];
+
+
+
+    </script>
+</body>
+
+</html>
